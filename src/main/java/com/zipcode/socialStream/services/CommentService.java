@@ -48,4 +48,5 @@ public class CommentService {
     List<Comment> getAllByCommentId (Long commentId){
         return repository.getAllByCommentId(commentId);
     }
+    List<Comment> getAllByUserId(Long userId) {return repository.getAllByUserId(userId);}
 }

@@ -122,29 +122,6 @@ public class UserControllerTest {
         verifyNoMoreInteractions(mockService);
     }
 
-    @Test
-    public void testLogin() throws Exception {
-        when(mockService.login(user1.getUsername())).thenReturn(user1);
-
-        mockMvc.perform(put("/login/{username}", "mUser")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-        verify(mockService, times(1)).login("mUser");
-
-    }
-
-    @Test
-    public void testLogout() throws Exception {
-        when(mockService.logout(user1.getUsername())).thenReturn(user1);
-
-        mockMvc.perform(put("/logout/{username}", "mUser")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-        verify(mockService, times(1)).logout("mUser");
-    }
-
 
     public static String asJsonString(final Object obj) {
         try {

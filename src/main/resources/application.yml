@@ -30,3 +30,19 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
+
+---
+
+spring:
+  profiles: local
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true

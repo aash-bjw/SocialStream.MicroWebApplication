@@ -1,8 +1,15 @@
 package com.zipcode.socialStream.services;
 
+import com.zipcode.socialStream.dto.LoginRequest;
 import com.zipcode.socialStream.models.User;
 import com.zipcode.socialStream.repositories.UserRepository;
+import com.zipcode.socialStream.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,12 +18,37 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public User addUser(User user) throws Exception {
-        if (repository.findByUsername(user.getUsername()) == null) {
-            return repository.save(user);
-        }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-        throw new Exception("Username already exists!");
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtProvider jwtProvider;
+
+    public User addUser(User user) {
+        User tempUser = new User();
+        tempUser.setUserId(user.getUserId());
+        tempUser.setUsername(user.getUsername());
+        tempUser.setPassword(encodePassword(user.getPassword()));
+        tempUser.setFirstName(user.getFirstName());
+        tempUser.setLastName(user.getLastName());
+        tempUser.setEmailAddress(user.getEmailAddress());
+
+        return repository.save(tempUser);
+    }
+
+    private String encodePassword(String password){
+        return passwordEncoder.encode(password);
+    }
+
+    public AuthenticationResponse login(LoginRequest loginRequest) throws Exception {
+        Authentication authenticate = authenticationManager.authenticate(new
+                UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        String authenticationToken = jwtProvider.generateToken(authenticate);
+        return new AuthenticationResponse(authenticationToken, loginRequest.getUsername());
     }
 
     public User findByUsername(String username){
@@ -34,7 +66,7 @@ public class UserService {
         if(user.getEmailAddress() != null)
             ogUser.setEmailAddress(user.getEmailAddress());
 
-        return repository.save(user);
+        return repository.save(ogUser);
     }
 
     public Iterable<User> findAll(){
@@ -50,17 +82,4 @@ public class UserService {
 
         return false;
     }
-
-    public User login(String username) {
-        User original = repository.findByUsername(username);
-        original.setLoggedIn(true);
-        return repository.save(original);
-    }
-
-    public User logout(String username) {
-        User original = repository.findByUsername(username);
-        original.setLoggedIn(false);
-        return repository.save(original);
-    }
-
 }

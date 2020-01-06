@@ -12,9 +12,9 @@ import javax.sql.DataSource;
 @Profile("cloud")
 public class DataSourceConfig{
 
-    private static final String USER_NAME = System.getenv("DB_UN");
-    private static final String PASSWORD = System.getenv("DB_PW");
-    private static final String URL = System.getenv("DB_URL");
+    private static final String USER_NAME = System.getenv("DATABASE_USERNAME");
+    private static final String PASSWORD = System.getenv("DATABASE_PASSWORD");
+    private static final String URL = System.getenv("DATABASE_URL");
 
     @Bean
     public DataSource dataSource() {

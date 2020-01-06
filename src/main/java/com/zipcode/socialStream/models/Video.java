@@ -12,7 +12,7 @@ public class Video {
     private Long videoId;
     private String videoName;
     private String videoDescription;
-    //private Video video;
+    private String location;
     private Long userId;
 
     // Nullary Constructor
@@ -63,5 +63,13 @@ public class Video {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

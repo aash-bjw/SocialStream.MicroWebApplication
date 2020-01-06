@@ -97,36 +97,4 @@ public class UserServiceTest {
         verify(mockRepository, times(1)).delete(user2);
     }
 
-    @Test
-    public void testLogin() {
-        when(mockRepository.save(user3)).thenReturn(user3);
-        when(mockRepository.findByUsername("Mock")).thenReturn(user3);
-        user3.setLoggedIn(false);
-
-        assertThat(service.login("Mock"), is(user3));
-
-        assertTrue(user3.getLoggedIn());
-
-        verify(mockRepository, times(1)).save(user3);
-        verify(mockRepository, times(1)).findByUsername("Mock");
-
-        verifyNoMoreInteractions(mockRepository);
-    }
-
-    @Test
-    public void testLogout() {
-        when(mockRepository.save(user3)).thenReturn(user3);
-        when(mockRepository.findByUsername("Mock")).thenReturn(user3);
-        user3.setLoggedIn(true);
-
-        assertThat(service.logout("Mock"), is(user3));
-
-        assertFalse(user3.getLoggedIn());
-
-        verify(mockRepository, times(1)).save(user3);
-        verify(mockRepository, times(1)).findByUsername("Mock");
-
-        verifyNoMoreInteractions(mockRepository);
-    }
-
 }
