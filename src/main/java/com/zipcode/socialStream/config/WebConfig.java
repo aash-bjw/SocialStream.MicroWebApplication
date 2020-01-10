@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
-                .allowedOrigins("*", "https://cfapps.io", "https://social-stream-ui.cfapps.io", "https://social-stream-ui.cfapps.io", "https://social-stream-app.cfapps.io")
+                .allowedOrigins("*", "herokuapp.com/", "http://socialstream-ui.herokuapp.com/", "http://socialstreamapp.herokuapp.com/")
                 .allowedMethods("*")
                 .maxAge(3600L)
                 .allowedHeaders("*")
@@ -20,3 +20,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 }
+
+
+// "https://cfapps.io", "https://social-stream-ui.cfapps.io", "https://social-stream-ui.cfapps.io", "https://social-stream-app.cfapps.io"

@@ -22,6 +22,9 @@ spring:
 spring:
   profiles: cloud
   datasource:
+    url: jdbc:mysql://g887w2o1mfo3zy15:dy49puq4f95zibdw@o3iyl77734b9n3tg.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/hqzt91tc63c126ip
+    username: g887w2o1mfo3zy15
+    password: dy49puq4f95zibdw
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
