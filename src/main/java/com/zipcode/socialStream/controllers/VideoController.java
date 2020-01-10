@@ -23,9 +23,9 @@ public class VideoController {
             return new ResponseEntity<>(videoService.index(), HttpStatus.OK);
         }
 
-        @GetMapping("/videos/{videoId}")
-        public ResponseEntity<Video> show (@PathVariable Long videoId){
-            return new ResponseEntity<>(videoService.show(videoId), HttpStatus.OK);
+        @GetMapping("/videos/{videoName}")
+        public ResponseEntity<Video> show (@PathVariable String videoName){
+            return new ResponseEntity<>(videoService.show(videoName), HttpStatus.OK);
         }
 
         @PostMapping("/videos")
@@ -35,9 +35,9 @@ public class VideoController {
             return new ResponseEntity<>(videoService.create(file, videoName, videoDescription), HttpStatus.OK);
         }
 
-        @PutMapping("/videos/{videoId}")
-        public ResponseEntity<Video> update(@PathVariable Long videoId, @Valid @RequestBody Video video){
-            return new ResponseEntity<>(videoService.update(videoId, video), HttpStatus.OK);
+        @PutMapping("/videos/{videoName}")
+        public ResponseEntity<Video> update(@PathVariable String videoName, @Valid @RequestBody Video video){
+            return new ResponseEntity<>(videoService.update(videoName, video), HttpStatus.OK);
         }
 
         @DeleteMapping("/videos/{videoId}")

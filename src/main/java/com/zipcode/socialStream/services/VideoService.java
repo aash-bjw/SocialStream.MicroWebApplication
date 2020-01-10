@@ -31,9 +31,8 @@ public class VideoService {
         return repository.findAll();
     }
 
-    public Video show(Long videoId){
-
-        return repository.findByVideoId(videoId);
+    public Video show(String videoName){
+        return repository.findVideoByVideoName(videoName);
     }
 
     public Video create(MultipartFile multipartFile, String videoName, String videoDescription)  {
@@ -50,12 +49,12 @@ public class VideoService {
         }finally{
             if(file != null) file.delete();
         }
-        return update(video.getVideoId(), video);
+        return update(video.getVideoName(), video);
 
     }
 
-    public Video update(Long videoId, Video video){
-        Video ogVideo = show(videoId);
+    public Video update(String videoName, Video video){
+        Video ogVideo = show(videoName);
         ogVideo.setVideoDescription(video.getVideoDescription());
         ogVideo.setVideoName(video.getVideoName());
         return repository.save(ogVideo);
