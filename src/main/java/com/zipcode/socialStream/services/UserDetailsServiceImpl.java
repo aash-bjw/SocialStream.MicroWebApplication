@@ -1,6 +1,6 @@
 package com.zipcode.socialStream.services;
 
-import com.zipcode.socialStream.models.User;
+import com.zipcode.socialStream.models.Users;
 import com.zipcode.socialStream.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,8 +21,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+        Users users = userRepository.findByUsername(username);
+        return new org.springframework.security.core.userdetails.User(users.getUsername(), users.getPassword(),
                 true, true, true, true,
                 getAuthorities("ROLE_USER"));
     }

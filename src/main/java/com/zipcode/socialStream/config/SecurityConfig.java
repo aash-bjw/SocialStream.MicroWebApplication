@@ -36,11 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup", "/videos/**")
+                .antMatchers("/signup", "/videos/**","/video-page/**", "/login")
                 .permitAll()
                 .antMatchers("/login")
                 .permitAll()
-                .antMatchers("/users")
+                .antMatchers("/users", "/hello")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

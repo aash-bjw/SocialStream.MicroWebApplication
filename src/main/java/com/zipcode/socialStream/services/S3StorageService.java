@@ -20,11 +20,10 @@ public class S3StorageService {
     private static final String bucketName = "socialstreamzipcode";
 
     public static String upload(File file){
-        System.out.println(AKID);
         PutObjectRequest request = new PutObjectRequest(bucketName, file.getName(), file);
         AmazonS3 s3client = getS3();
         s3client.putObject(request);
-        return file.getName();
+        return "//" + bucketName + ".s3.us-east-2.amazonaws.com/" + file.getName();
     }
 
     private static AmazonS3 getS3() {
@@ -37,6 +36,7 @@ public class S3StorageService {
     public static File convertToFile(MultipartFile multipartFile, Long id) throws IOException{
         File file = new File("video" + id + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
         FileOutputStream fos = new FileOutputStream(file);
+        fos.write(multipartFile.getBytes());
         fos.close();
         return file;
     }

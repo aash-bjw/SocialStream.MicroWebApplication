@@ -12,34 +12,36 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "\"herokuapp.com/\", \"http://socialstream-ui.herokuapp.com/\", \"http://socialstreamapp.herokuapp.com/\"")
 @RequestMapping("")
 public class VideoController {
     @Autowired
     private VideoService videoService;
 
+        @RequestMapping("videos/all")
         public ResponseEntity<Iterable<Video>> index(){
             return new ResponseEntity<>(videoService.index(), HttpStatus.OK);
-
         }
 
-        @GetMapping("/videos/{videoId}")
-        public @ResponseBody ResponseEntity<Video> show (@PathVariable Long videoId){
-            return new ResponseEntity<>(videoService.show(videoId), HttpStatus.OK);
+        @GetMapping("/videos/{videoName}")
+        public ResponseEntity<Video> show (@PathVariable String videoName){
+            return new ResponseEntity<>(videoService.show(videoName), HttpStatus.OK);
         }
 
         @PostMapping("/videos")
-        public ResponseEntity<Video> create(@Valid @RequestParam MultipartFile file, @RequestParam String videoName, @RequestParam String videoDescription){
+        public ResponseEntity<Video> create(@Valid @RequestParam("file") MultipartFile file,
+                                            @RequestParam("videoName") String videoName,
+                                            @RequestParam("videoDescription") String videoDescription){
             return new ResponseEntity<>(videoService.create(file, videoName, videoDescription), HttpStatus.OK);
         }
 
-        @PutMapping("/videos/{videoId}")
-        public ResponseEntity<Video> update(@PathVariable Long videoId, @Valid @RequestBody Video video){
-            return new ResponseEntity<>(videoService.update(videoId, video), HttpStatus.OK);
+        @PutMapping("/videos/{videoName}")
+        public ResponseEntity<Video> update(@PathVariable String videoName, @Valid @RequestBody Video video){
+            return new ResponseEntity<>(videoService.update(videoName, video), HttpStatus.OK);
         }
 
-        @DeleteMapping("/videos")
-        public ResponseEntity<Boolean> delete(@Valid @RequestParam Long videoId){
+        @DeleteMapping("/videos/{videoId}")
+        public ResponseEntity<Boolean> delete(@PathVariable Long videoId){
             return new ResponseEntity<>(videoService.delete(videoId), HttpStatus.OK);
         }
 }

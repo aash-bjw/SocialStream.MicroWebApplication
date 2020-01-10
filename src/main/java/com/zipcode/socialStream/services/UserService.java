@@ -1,7 +1,7 @@
 package com.zipcode.socialStream.services;
 
 import com.zipcode.socialStream.dto.LoginRequest;
-import com.zipcode.socialStream.models.User;
+import com.zipcode.socialStream.models.Users;
 import com.zipcode.socialStream.repositories.UserRepository;
 import com.zipcode.socialStream.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +27,16 @@ public class UserService {
     @Autowired
     private JwtProvider jwtProvider;
 
-    public User addUser(User user) {
-        User tempUser = new User();
-        tempUser.setUserId(user.getUserId());
-        tempUser.setUsername(user.getUsername());
-        tempUser.setPassword(encodePassword(user.getPassword()));
-        tempUser.setFirstName(user.getFirstName());
-        tempUser.setLastName(user.getLastName());
-        tempUser.setEmailAddress(user.getEmailAddress());
+    public Users addUser(Users users) {
+        Users tempUsers = new Users();
+        tempUsers.setUserId(users.getUserId());
+        tempUsers.setUsername(users.getUsername());
+        tempUsers.setPassword(encodePassword(users.getPassword()));
+        tempUsers.setFirstName(users.getFirstName());
+        tempUsers.setLastName(users.getLastName());
+        tempUsers.setEmailAddress(users.getEmailAddress());
 
-        return repository.save(tempUser);
+        return repository.save(tempUsers);
     }
 
     private String encodePassword(String password){
@@ -51,35 +51,41 @@ public class UserService {
         return new AuthenticationResponse(authenticationToken, loginRequest.getUsername());
     }
 
-    public User findByUsername(String username){
+    public Users findByUsername(String username){
         return repository.findByUsername(username);
     }
 
-    public User updateUser(String username, User user){
-        User ogUser = findByUsername(username);
-        if(user.getFirstName() != null)
-            ogUser.setFirstName(user.getFirstName());
-        if(user.getLastName() != null)
-            ogUser.setLastName(user.getLastName());
-        if(user.getPassword() != null)
-            ogUser.setPassword(user.getPassword());
-        if(user.getEmailAddress() != null)
-            ogUser.setEmailAddress(user.getEmailAddress());
+    public Users updateUser(String username, Users users){
+        Users ogUsers = findByUsername(username);
+        if(users.getFirstName() != null)
+            ogUsers.setFirstName(users.getFirstName());
+        if(users.getLastName() != null)
+            ogUsers.setLastName(users.getLastName());
+        if(users.getPassword() != null)
+            ogUsers.setPassword(users.getPassword());
+        if(users.getEmailAddress() != null)
+            ogUsers.setEmailAddress(users.getEmailAddress());
 
-        return repository.save(ogUser);
+        return repository.save(ogUsers);
     }
 
-    public Iterable<User> findAll(){
+    public Iterable<Users> findAll(){
         return repository.findAll();
     }
 
     public Boolean deleteByUsername(String username){
-        User user = findByUsername(username);
-        if(user != null) {
-            repository.delete(user);
+        Users users = findByUsername(username);
+        if(users != null) {
+            repository.delete(users);
             return true;
         }
 
         return false;
+    }
+
+    public String getCurrentUser() {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return principal.getUsername();
     }
 }
