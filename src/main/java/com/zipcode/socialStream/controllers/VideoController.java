@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 
 @Controller
-@CrossOrigin(origins = "https://socialstreamapp.herokuapp.com")
+@CrossOrigin(origins = "\"herokuapp.com/\", \"http://socialstream-ui.herokuapp.com/\", \"http://socialstreamapp.herokuapp.com/\"")
 @RequestMapping("")
 public class VideoController {
     @Autowired
