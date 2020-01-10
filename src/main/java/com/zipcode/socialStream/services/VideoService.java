@@ -43,7 +43,7 @@ public class VideoService {
         try{
             file = S3StorageService.convertToFile(multipartFile, video.getVideoId());
             String location = S3StorageService.upload(file);
-            video.setLocation(location);
+            video.setLocation("https:"+location);
         }catch(Exception ex){
             System.out.println("Error Occurred in S3 Storage Service");
             ex.printStackTrace();

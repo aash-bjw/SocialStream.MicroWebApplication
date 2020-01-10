@@ -36,7 +36,7 @@ spring:
 ---
 
 spring:
-  profiles: cloud
+  profiles: local
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
