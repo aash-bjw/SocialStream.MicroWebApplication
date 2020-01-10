@@ -70,6 +70,6 @@ public class Video {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.location = "https:" + location;
     }
 }
