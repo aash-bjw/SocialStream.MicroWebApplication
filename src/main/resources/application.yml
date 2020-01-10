@@ -22,16 +22,16 @@ spring:
 spring:
   profiles: cloud
   datasource:
-    url: jdbc:mysql://g887w2o1mfo3zy15:dy49puq4f95zibdw@o3iyl77734b9n3tg.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/hqzt91tc63c126ip
-    username: g887w2o1mfo3zy15
-    password: dy49puq4f95zibdw
-    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:postgres://jwavdghpikkodc:45f4f050d808f7d044ca19d3e54977d454f62ed627dde7950491cf39e40f6432@ec2-174-129-33-14.compute-1.amazonaws.com:5432/dc2b4
+    username: jwavdghpikkodc
+    password: 45f4f050d808f7d044ca19d3e54977d454f62ed627dde7950491cf39e40f6432
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
 
 ---
 
